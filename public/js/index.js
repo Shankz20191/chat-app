@@ -1,18 +1,16 @@
-var socket = io()
+/* eslint-disable */
+const socket = io();
+/* eslint-enable */
 
-socket.on('connect', function () {
-  console.log('Connected to Server.')
-})
+socket.on('connect', () => {
+  console.log('Connected to Server.');
+});
 
-socket.on('disconnect', function () {
-  console.log('Disconnecte from Server.')
-})
+socket.on('newMessage', (message) => {
+  console.log(message);
+});
 
-socket.on('newMessage', function (res) {
-  console.log(res)
-})
-
-socket.emit('createMessage', {
-  'from': 'shashank@chat.com',
-  'text': 'Hey server.'
-})
+// socket.emit('createMessage', {
+//   from: 'shashank@chat.com',
+//   text: 'Hey server.',
+// });
