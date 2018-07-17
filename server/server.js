@@ -14,18 +14,19 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
   console.log('Connected to User.');
-  socket.on('disconnect', () => {
-    console.log('User Disconnected');
-  });
 
   socket.emit('newMessage', generateMessage('Admin', 'Welcome to our chat room.'));
 
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined the chat room.'));
 
-  socket.on('createMessage', (message) => {
+  socket.on('createMessage', (message, callback) => {
     console.log(message);
+    io.emit('newMessage', generateMessage(message.from, message.text));
+    callback('This is from server.');
+  });
 
-    socket.broadcast.emit('newMessage', generateMessage(message.from, message.text));
+  socket.on('disconnect', () => {
+    console.log('User Disconnected');
   });
 });
 
